@@ -14,5 +14,7 @@
 				<tr><td>{{ forloop.counter }}: {{ item.text }} </td></tr>
 			{% endfor %}
 		</table>
+		<h2 style='color:red'> Komentar : </h2>
+		<h3> {{ message|default:"yey, waktunya berlibur" }} </h3>
 	</body>
 </html>

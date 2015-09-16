@@ -27,8 +27,8 @@ class HomePageTest(TestCase):
 
 		response = home_page(request) 
 		
-		self.assertEqual(Item.objects.count(), 1) #check one new item saved
-		new_item = Item.objects.first() #get first item from new objects
+		self.assertEqual(Item.objects.count(), 1) 	#check one new item saved
+		new_item = Item.objects.first() 		#get first item from new objects
 		self.assertEqual(new_item.text, 'A new list item') #check the content (text)
 
 
@@ -57,7 +57,35 @@ class HomePageTest(TestCase):
 		
 		self.assertIn('itemey 1', response.content.decode())
 		self.assertIn('itemey 2', response.content.decode())
+
+# start of tutorial 2
+	def test_komentar_pribadi_gabut(self):
+		request = HttpRequest()
+		response = home_page(request)
+		self.assertIn("yey, waktunya berlibur", response.content.decode())
 	
+	def test_komentar_pribadi_santai(self):
+		Item.objects.create(text='itemey 1')
+		Item.objects.create(text='itemey 1')
+		Item.objects.create(text='itemey 1')
+		Item.objects.create(text='itemey 1')
+		
+		request = HttpRequest()
+		response = home_page(request)
+		self.assertIn("sibuk tapi santai", response.content.decode())
+
+	def test_komentar_pribadi_sibuk(self):
+		Item.objects.create(text='itemey 1')
+		Item.objects.create(text='itemey 2')
+		Item.objects.create(text='itemey 3')
+		Item.objects.create(text='itemey 4')
+		Item.objects.create(text='itemey 5')
+		
+		request = HttpRequest()
+		response = home_page(request)
+		self.assertIn("oh tidak", response.content.decode())
+
+# end of tutorial 2
 
 class ItemModelTest(TestCase):
 
