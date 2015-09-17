@@ -6,20 +6,30 @@ from lists.models import Item
 # Create your views here.
 def home_page(request):
 	if request.method == 'POST':
-		#new_item_text = request.POST['item_text']
 		Item.objects.create(text=request.POST['item_text'])
-		return redirect('/')
+		return redirect('/lists/the-only-list-in-the-world/')
 	
-	items = Item.objects.all()
+	#items = Item.objects.all()
 	# start of tutorial 2 
-	count_item = items.count()
-	message = ''
-	if count_item == 0:
-		message = 'yey, waktunya berlibur'
-	elif count_item > 0 and count_item < 5 :
-		message = 'sibuk tapi santai'
-	elif count_item > 4:
-		message = 'oh tidak'
+	#count_item = items.count()
+	#message = ''
+	#if count_item == 0:
+	#	message = 'yey, waktunya berlibur'
+	#elif count_item > 0 and count_item < 5 :
+	#	message = 'sibuk tapi santai'
+	#elif count_item > 4:
+	#	message = 'oh tidak'
 	
 	# end of tutorial 2
-	return render(request, 'home.html' ,{ 'items':items, 'message':message })
+	#content = { 'items':items, 'message':message }
+	page = 'home.html'
+	#return render(request, page, content)
+	return render(request, page)
+
+def view_list(request):
+	items = Item.objects.all()
+	content = { 'items':items }
+	page = 'list.html'
+	return render(request, page, content )
+	
+
