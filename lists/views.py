@@ -30,18 +30,19 @@ def home_page(request):
 def view_list(request, list_id):
 	list_ = List.objects.get(id=list_id)
 	items = Item.objects.filter(list=list_)
+
 	#items = Item.objects.all()
-	content = { 'items':items }
+	content = { 'list' : list_}
 	page = 'list.html'
 	return render(request, page, content )
 	
 
 def new_list(request):
 	list_ = List.objects.create()
-	Item.objects.create(text=request.POST['item_text'], list =  list_)
+	Item.objects.create(text=request.POST['item_text'], list=list_)
 	return redirect('/lists/%d/' % (list_.id,))
 
 def add_item(request, list_id):
-	list_ = List.objects.create(id=list_id)
-	Item.objects.create(text=request.POST['item_text'])
+	list_ = List.objects.get(id=list_id)
+	Item.objects.create(text=request.POST['item_text'], list=list_)
 	return redirect('/lists/%d/' % (list_.id,))
