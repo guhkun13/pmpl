@@ -19,68 +19,38 @@ class HomePageTest(TestCase):
 
 		expected_html = render_to_string('home.html')
 		self.assertEqual(response.content.decode(), expected_html)
-## moved
-#	def test_home_page_can_save_a_POST_request(self):
-#		request = HttpRequest()  
-#		request.method = 'POST'
-#		request.POST['item_text'] = 'A new list item'
-
-#		response = home_page(request) 
-		
-#		self.assertEqual(Item.objects.count(), 1) 	#check one new item saved
-#		new_item = Item.objects.first() 		#get first item from new objects
-#		self.assertEqual(new_item.text, 'A new list item') #check the content (text)
-
-
-#	def test_home_page_redirects_after_POST(self):
-#		request = HttpRequest()
-#		request.method = 'POST'
-#		request.POST['item_text'] = 'A new list item'
-		
-#		response = home_page(request)
-		
-#		self.assertEqual(response.status_code, 302)
-#		self.assertEqual(response['location'], '/lists/the-only-list-in-the-world/')
-
-		
-##removed		
-#	def test_home_page_only_saves_items_when_necessary(self):
-#		request = HttpRequest()
-#		home_page(request)
-#		self.assertEqual(Item.objects.count(), 0)
 	
 # start of tutorial 2
-
-#	def test_komentar_pribadi_gabut(self):
-#		request = HttpRequest()
-		#response = home_page(request)
-#		response = view_list(request)
-#		self.assertIn("yey, waktunya berlibur", response.content.decode())
+	def test_komentar_pribadi_gabut(self):
+		request = HttpRequest()
+		#a_list = List.objects.create()
+		response = home_page(request)
+		self.assertIn('yey, waktunya berlibur', response.content.decode())
 	
-#	def test_komentar_pribadi_santai(self):
-#		Item.objects.create(text='itemey 1')
-#		Item.objects.create(text='itemey 1')
-#		Item.objects.create(text='itemey 1')
-#		Item.objects.create(text='itemey 1')
+	def test_komentar_pribadi_santai(self):
+		a_list = List.objects.create()
+		Item.objects.create(text='itemey 1', list = a_list)
+		Item.objects.create(text='itemey 1', list = a_list)
+		Item.objects.create(text='itemey 1', list = a_list)
+		Item.objects.create(text='itemey 1', list = a_list)
 		
-#		request = HttpRequest()
-		#response = home_page(request)
-#		response = view_list(request)
+		request = HttpRequest()
+		response = view_list(request, a_list.id)
 
-#		self.assertIn("sibuk tapi santai", response.content.decode())
+		self.assertIn("sibuk tapi santai", response.content.decode())
 
-#	def test_komentar_pribadi_sibuk(self):
-#		Item.objects.create(text='itemey 1')
-#		Item.objects.create(text='itemey 2')
-#		Item.objects.create(text='itemey 3')
-#		Item.objects.create(text='itemey 4')
-#		Item.objects.create(text='itemey 5')
+	def test_komentar_pribadi_sibuk(self):
+		a_list = List.objects.create()
+		Item.objects.create(text='itemey 1', list = a_list)
+		Item.objects.create(text='itemey 2', list = a_list)
+		Item.objects.create(text='itemey 3', list = a_list)
+		Item.objects.create(text='itemey 4', list = a_list)
+		Item.objects.create(text='itemey 5', list = a_list)
 		
-#		request = HttpRequest()
-		#response = home_page(request)
-#		response = view_list(request)
+		request = HttpRequest()
+		response = view_list(request, a_list.id)
 
-#		self.assertIn("oh tidak", response.content.decode())
+		self.assertIn("oh tidak", response.content.decode())
 
 # end of tutorial 2
 
