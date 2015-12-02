@@ -1,0 +1,7 @@
+chpater 5 : 
+1. regression : ketika sebuah kode merusak aspek lain aplikasi yg sebelumnya bekerja
+dikatakan regression ketika muncul 'unexpected failure' yaitu kesalahan yang tidak 
+diperkirakan. artinya butuh regresi thd kode kita
+contoh : 
+ - request.POST['key'] = awalnya bisa, tapi setelah ubah struktur/kode nya,error.
+ -> perbaikan => request.POST.get['key'] => dinamakan regression 
